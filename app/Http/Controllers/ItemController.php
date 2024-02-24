@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\Currency;
 use App\Http\Requests\StoreItemRequest;
 use App\Http\Requests\UpdateItemRequest;
 
@@ -13,7 +14,13 @@ class ItemController extends Controller
      */
     public function index()
     {
-        //
+        $items = Item::all();
+        $currency = 'EUR';
+
+        return view('index', [
+            'items' => $items,
+            'currency' => $currency,
+        ]);
     }
 
     /**
