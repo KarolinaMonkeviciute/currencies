@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title></title>
+    <title>Currencies</title>
     @vite(['resources/js/app.js'])
 </head>
 
@@ -22,6 +22,7 @@
 @foreach ($items as $item)
     <div>
         <h2>{{ $item->name }}<h2>
-                <p>{{ $item->price * $rate }} {{ $selectedCurrency ?? 'EUR' }}</p>
+                <p>{{ App\Services\CountPriceService::getPrice($item->price, $rate) }} {{ $selectedCurrency ?? 'EUR' }}
+                </p>
     </div>
 @endforeach

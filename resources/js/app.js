@@ -2,7 +2,7 @@ import "./bootstrap";
 import jQuery from "jquery";
 window.$ = jQuery;
 
-let selectedCurrency = "EUR";
+let selectedCurrency;
 
 if (document.querySelector("[data-select-currency]")) {
     const currencySelect = document.querySelector("[data-select-currency]");

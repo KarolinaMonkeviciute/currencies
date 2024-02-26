@@ -6,6 +6,7 @@ use App\Models\Item;
 use App\Models\Currency;
 use App\Http\Requests\StoreItemRequest;
 use App\Http\Requests\UpdateItemRequest;
+use App\Services\GetSelectedCurrencyRateService;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
@@ -20,8 +21,10 @@ class ItemController extends Controller
         $selectedCurrency = $request->query('currency');
 
         if($selectedCurrency){
-            $rate = Currency::where('currency_code', $selectedCurrency)->first()->rate;
-        } else {$rate = 1;}
+            $rate = GetSelectedCurrencyRateService::getRate($selectedCurrency);
+        } else {
+            $rate = 1;
+        }
 
         return view('index', [
             'items' => $items,
