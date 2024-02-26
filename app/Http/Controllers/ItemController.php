@@ -6,20 +6,31 @@ use App\Models\Item;
 use App\Models\Currency;
 use App\Http\Requests\StoreItemRequest;
 use App\Http\Requests\UpdateItemRequest;
+use Illuminate\Http\Request;
+use App\Jobs\CurrencyData;
 
 class ItemController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $items = Item::all();
-        $currency = 'EUR';
+        $currencies = Currency::all();
+        $selectedCurrency = $request->query('currency');
+
+        CurrencyData::dispatch();
+
+        if($selectedCurrency){
+            $rate = Currency::where('currency_code', $selectedCurrency)->first()->rate;
+        } else {$rate = 1;}
 
         return view('index', [
             'items' => $items,
-            'currency' => $currency,
+            'currencies' => $currencies,
+            'selectedCurrency' => $selectedCurrency,
+            'rate' => $rate,
         ]);
     }
 
