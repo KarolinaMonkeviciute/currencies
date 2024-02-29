@@ -10,6 +10,7 @@
 </head>
 
 <h1>Items</h1>
+<a href="{{ route('create') }}">Add item</a>
 <form>
     <label>Currency:</label>
     <select data-select-currency>
@@ -22,7 +23,14 @@
 @foreach ($items as $item)
     <div>
         <h2>{{ $item->name }}<h2>
-                <p>{{ App\Services\CountPriceService::getPrice($item->price, $rate) }} {{ $selectedCurrency ?? 'EUR' }}
+                <p>{{ App\Services\CountPriceService::getPrice($item->price, $rate) }}
+                    {{ $selectedCurrency ?? 'EUR' }}
                 </p>
+                <form action="{{ route('destroy', $item) }}" method="post">
+                    <button type="submit">X</button>
+                    @csrf
+                    @method('delete')
+                </form>
+                <a href="{{ route('edit', $item) }}">Edit item</a>
     </div>
 @endforeach

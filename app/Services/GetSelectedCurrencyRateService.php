@@ -1,13 +1,20 @@
 <?php
 
 namespace App\Services;
-use App\Models\Currency;
+use App\Repositories\CurrencyRepository;
 
 class GetSelectedCurrencyRateService
 {
-    public static function getRate(string $currency): ?float{
+    protected $currencyRepository;
+
+    public function __construct(CurrencyRepository $currencyRepository)
+    {
+        $this->currencyRepository = $currencyRepository;
+    }
+
+    public function getRate(string $currency): ?float{
         if($currency){ 
-           $findCurrency = Currency::where('currency_code', $currency)->first();
+           $findCurrency = $this->currencyRepository->show($currency);
            if($findCurrency){
             return $findCurrency->rate;
            }else{
