@@ -6,12 +6,11 @@ use App\Models\Currency;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-class CurrencyRepository
-{
-    protected $currency;
 
-    public function __construct(Currency $currency){
-        $this->currency = $currency;
+class CurrencyRepository extends RepositoryFoundation
+{
+    public function __construct(Currency $model){
+        parent::__construct($model);
     }
 
     public function showAll(): Collection{

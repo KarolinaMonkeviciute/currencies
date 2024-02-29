@@ -5,12 +5,10 @@ namespace App\Repositories;
 use App\Models\Item;
 use Illuminate\Database\Eloquent\Collection;
 
-class ItemRepository
+class ItemRepository extends RepositoryFoundation
 {
-    protected $item;
-
-    public function __construct(Item $item){
-        $this->item = $item;
+    public function __construct(Item $model){
+        parent::__construct($model);
     }
 
     public function showAll(): Collection{
